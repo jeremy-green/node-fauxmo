@@ -23,12 +23,12 @@ var setState = function(index, state) {
 
 module.exports.startWebServer = function(fauxMo) {
 	devices = fauxMo.devices;
-	
+
 	let services = [];
-	
+
 	for(let i = 0; i <= devices.length - 1; i++) {
 		const port = devices[i].port;
-		devices[i].state = 0;
+		devices[i].state = devices[i].state || 0;
 
 		const server = http.createServer(function(request, response) {
 			//console.log(request.url + ':' + port + ' from ' + request.connection.remoteAddress);
@@ -68,7 +68,7 @@ module.exports.startWebServer = function(fauxMo) {
 								</s:Body>
 							</s:Envelope>`
 						} else {
-							
+
 						}
 						//console.log(xmlresponse);
 						response.setHeader('Content-Type', 'text/xml');
@@ -194,7 +194,7 @@ module.exports.startWebServer = function(fauxMo) {
 				response.end('Hello Node.js Server!');
 			}
 		});
-		
+
 		server.listen(port, (err) => {
 			if (err) {
 				return console.log('something bad happened', err);
